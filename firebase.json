@@ -1,0 +1,94 @@
+{
+  "hosting": [
+    {
+      "target": "api-service",
+      "public": "api-public",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": {
+            "functionId": "handlePayPalWebhook",
+            "region": "us-central1"
+          }
+        }
+      ]
+    },
+    {
+      "target": "docs-service",
+      "public": "docs-public",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            { "key": "X-Frame-Options", "value": "DENY" },
+            { "key": "X-Content-Type-Options", "value": "nosniff" }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "audit-service",
+      "public": "audit-public",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "**",
+          "headers": [
+            { "key": "X-Frame-Options", "value": "DENY" },
+            { "key": "X-Content-Type-Options", "value": "nosniff" },
+            { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
+          ]
+        }
+      ]
+    },
+    {
+      "target": "portfolio",
+      "public": "public",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+      "headers": [
+        {
+          "source": "**/*.@(jpg|jpeg|gif|png|svg|webp)",
+          "headers": [
+            { "key": "Cache-Control", "value": "public, max-age=2592000, s-maxage=2592000" }
+          ]
+        },
+        {
+          "source": "**/*.@(js|css)",
+          "headers": [
+            { "key": "Cache-Control", "value": "public, max-age=604800" }
+          ]
+        },
+        {
+          "source": "**",
+          "headers": [
+            { "key": "X-Frame-Options", "value": "DENY" },
+            { "key": "X-Content-Type-Options", "value": "nosniff" },
+            { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+            { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+          ]
+        }
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "runtime": "nodejs20"
+    }
+  ],
+  "firestore": {
+    "database": "(default)",
+    "location": "nam5",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "auth": {
+    "providers": {
+      "anonymous": true,
+      "emailPassword": false
+    }
+  }
+}

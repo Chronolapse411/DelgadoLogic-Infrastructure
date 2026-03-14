@@ -1,0 +1,20 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow Cloud Functions (admin SDK) full access
+    // Client reads for sales data are restricted
+    match /artifacts/delgadologic/public/data/sales/{saleId} {
+      allow read: if false;
+      allow write: if false;
+    }
+    match /artifacts/delgadologic/public/data/health/{docId} {
+      allow read: if false;
+      allow write: if false;
+    }
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+# node
+node_modules/
+functions/node_modules/
+
+# firebase
+.firebase/
+.firebaserc
+
+# env
+.env
+.env.*
+
+# OS
+Thumbs.db
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# build
+*.log
+
+# paid product assets — NEVER commit
+product/
