@@ -1,127 +1,127 @@
-<div align="center">
+# DelgadoLogic — AR-Series Infrastructure
 
-# 🔧 DelgadoLogic — Automated IT Recovery Infrastructure
+<p align="center">
+  <img src="public/assets/branding/Banner_Header.jpg" alt="DelgadoLogic Banner" width="100%">
+</p>
 
-**Professional-grade automated fulfillment pipeline for digital IT support products.**
+<p align="center">
+  <strong>Enterprise-Grade Windows 11 Audio Recovery</strong><br>
+  <em>Architect v5.5 — GUI HUD Telemetry · Registry Power-State Sanitization · ITIL-Aligned Service Tiers</em>
+</p>
 
-[![Firebase](https://img.shields.io/badge/Firebase-Hosting%20%7C%20Functions-FFCA28?logo=firebase&logoColor=black&style=for-the-badge)](https://firebase.google.com)
-[![Node.js](https://img.shields.io/badge/Node.js-20-339933?logo=node.js&logoColor=white&style=for-the-badge)](https://nodejs.org)
-[![PayPal](https://img.shields.io/badge/PayPal-REST%20API-00457C?logo=paypal&logoColor=white&style=for-the-badge)](https://developer.paypal.com)
-[![Cloud Functions](https://img.shields.io/badge/Cloud%20Functions-v2-4285F4?logo=google-cloud&logoColor=white&style=for-the-badge)](https://cloud.google.com/functions)
-
-[Live Site](https://delgadologic.tech) · [API Endpoint](https://api.delgadologic.tech) · [Documentation](https://docs.delgadologic.tech)
-
-</div>
+<p align="center">
+  <a href="https://delgadologic.tech">🌐 Website</a> ·
+  <a href="mailto:support@delgadologic.tech">📧 Support</a> ·
+  <a href="https://github.com/Chronolapse411">👤 GitHub</a>
+</p>
 
 ---
 
-## Overview
+## 🔧 The Problem
 
-**DelgadoLogic** is a production-grade, multi-subdomain platform that automates the sale and delivery of IT diagnostic tools. The flagship product — the **Windows 11 AudioRestore Pro Guide** — is delivered through a zero-touch pipeline: payment verification, signed-URL generation, and branded email delivery happen within seconds of purchase.
+Windows 11 "Moment 5" update (KB5035853) introduced a kernel-level audio subsystem regression affecting Realtek, Intel Smart Sound, and Senary-based drivers. Symptoms include complete audio loss, phantom devices in Device Manager, and `ConservationIdleTime` registry corruption in the `{4d36e96c}` class key.
 
-## Architecture
+## ⚡ The Solution: AR-Series Architect v5.5
 
-```
-delgadologic.tech                → Portfolio & Product Landing Page
-├── api.delgadologic.tech        → PayPal Webhook Fulfillment Engine
-├── docs.delgadologic.tech       → Technical Documentation Portal
-└── audit.delgadologic.tech      → Security Auditor / Staging
-```
+A fully automated, 7-phase repair pipeline with real-time GUI HUD telemetry — built for IT professionals and advanced Windows administrators.
 
-### System Flow
+### Architecture Highlights
 
-```mermaid
-sequenceDiagram
-    participant Buyer
-    participant PayPal
-    participant API as api.delgadologic.tech
-    participant SecretMgr as Secret Manager
-    participant Storage as Cloud Storage
-    participant Firestore
-    participant Email as SMTP Relay
-
-    Buyer->>PayPal: Purchase ($4.99)
-    PayPal->>API: PAYMENT.CAPTURE.COMPLETED
-    API->>SecretMgr: Fetch PayPal credentials
-    API->>PayPal: Verify capture (REST API)
-    API->>Firestore: Log sale record
-    API->>Storage: Generate 24h signed URL
-    API->>Email: Send branded delivery email
-    API->>Buyer: Redirect → ?session=success
-```
-
-## Tech Stack
-
-| Layer | Technology | Purpose |
+| Component | Technology | Purpose |
 |---|---|---|
-| **Hosting** | Firebase Hosting (Multi-Site) | 4-subdomain architecture with SEO headers |
-| **Compute** | Cloud Functions v2 (Node 20) | PayPal webhook handler + daily health check |
-| **Storage** | Cloud Storage (Private Bucket) | Secure product file hosting with signed URLs |
-| **Database** | Cloud Firestore | Transaction logging and health monitoring |
-| **Auth** | Firebase Auth (Anonymous) | Secure session management |
-| **Secrets** | Google Secret Manager | Encrypted PayPal API credentials |
-| **Payments** | PayPal REST API (v2) | Hosted button + webhook capture verification |
-| **Email** | Nodemailer (Gmail SMTP) | Branded HTML fulfillment emails |
+| **GUI HUD** | WinForms + System32 driver enumeration | Visual telemetry during DISM/SFC deep repair |
+| **Registry Engine** | PowerShell 5.1 + HKLM Class Keys | `ConservationIdleTime` binary override (`0x1E` → `0x00`) |
+| **PnP Auditor** | `pnputil /enum-drivers` | OEM driver corruption detection (Realtek, Senary, SST) |
+| **Telemetry Export** | JSON (`ConvertTo-Json`) | Diagnostic ID, timestamp, billing metadata |
+| **Safety Gate** | `Checkpoint-Computer` | Auto-restore point before any system modifications |
+| **MotW Remediation** | `Unblock-File` in `.bat` launcher | Silently clears "Mark of the Web" security blocks |
+| **UAC Self-Elevation** | VBScript `ShellExecute` + `cacls` | Zero-friction admin escalation |
 
-## Key Features
-
-- **Automated Fulfillment** — Zero-touch delivery: payment → verification → signed URL → email, all within seconds
-- **Multi-Subdomain SOA** — Clean service-oriented architecture across 4 branded subdomains
-- **24-Hour Signed URLs** — Time-limited download links generated per transaction for security
-- **PayPal Webhook Verification** — Server-side capture verification against the PayPal REST API
-- **Daily Health Checks** — Scheduled Cloud Function pings PayPal API and logs status to Firestore
-- **High-Conversion Email** — Dark-mode branded HTML with 3-step PowerShell Quick Start guide
-- **SEO Headers** — X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
-
-## Project Structure
+### The 7-Phase Repair Cycle
 
 ```
-Manuel-Portfolio-2026/
-├── public/                    # Main portfolio site
-│   ├── index.html             # Landing page with PayPal integration
-│   └── profile.jpg            # Professional headshot
-├── api-public/                # API subdomain root
-├── docs-public/               # Documentation subdomain root
-├── audit-public/              # Security auditor subdomain root
-├── functions/
-│   ├── index.js               # Cloud Functions (webhook + health check)
-│   └── package.json           # Node 20 runtime dependencies
-├── product/                   # Secure product assets
-│   ├── Win11_AudioRestore_Pro_Guide_DelgadoLogic.pdf
-│   └── fix_audio_moment5.ps1
-├── documentation/
+Phase 1 → Kernel Integrity HUD (DISM + SFC visual scan)
+Phase 2 → System Restore Point creation
+Phase 3 → Driver Store PnP audit via pnputil
+Phase 4 → Registry Power-State overrides (ConservationIdleTime)
+Phase 5 → Hardware bus re-enumeration (Restart-PnpDevice)
+Phase 6 → Audio engine service restart (Audiosrv + AudioEndpointBuilder)
+Phase 7 → Verification tone playback + JSON telemetry export
+```
+
+## 🏗️ Service Tiers (ITIL-Aligned)
+
+| Tier | Package | Delivery | Contents |
+|---|---|---|---|
+| **Lite Triage** | `AR_v5.5_Lite_Triage.zip` | Free | Launcher + diagnostic scanner + manifest |
+| **Enterprise Suite** | `AR_v5.5_Enterprise_Suite.zip` | $4.99 (PayPal) | Full 7-phase engine + Pro Manual + branding |
+
+## 📁 Repository Structure
+
+```
+DelgadoLogic-Infrastructure/
+├── public/                          # Firebase Hosting (delgadologic.tech)
+│   ├── index.html                   # Landing page + PayPal integration
+│   ├── favicon.jpg                  # Logic Shield favicon
+│   ├── profile.jpg                  # Engineer profile
+│   └── assets/
+│       ├── branding/                # AppIcon, Banner, Favicon
+│       └── downloads/               # Distribution ZIPs
+├── product/AR_AudioRestore/         # Core product (gitignored)
+│   ├── Core_AR_v5.5.ps1             # Full 7-phase repair engine
+│   ├── Lite_AR_v5.5.ps1             # Free diagnostic scanner
+│   ├── Launch_AR_Enterprise.bat     # One-click Pro launcher
+│   ├── Launch_AR_Lite.bat           # One-click Lite launcher
+│   ├── Manual_AR_v5.5.pdf           # Pro Recovery Guide
+│   ├── 0_START_HERE_ENTERPRISE.txt  # Paid manifest
+│   ├── 0_START_HERE_LITE.txt        # Free manifest
+│   └── Resources/                   # Branding assets
+├── functions/                       # Cloud Functions v2 (Node 20)
+│   └── index.js                     # PayPal webhook handler
+├── documentation/                   # Business & technical docs
 │   ├── fulfillment_email_template.md
+│   ├── setup_guide.md
 │   ├── customer_success_plan.md
-│   ├── roadmap_to_revenue.md
-│   └── setup_guide.md
-├── firebase.json              # Multi-site hosting + functions config
-├── firestore.rules            # Strict deny-all security rules
-└── .firebaserc                # Hosting targets & project alias
+│   └── roadmap_to_revenue.md
+├── firebase.json                    # 4-subdomain hosting config
+└── README.md                        # This file
 ```
 
-## Deployment
+## 🌐 Infrastructure
 
-```bash
-# Deploy all hosting sites
-firebase deploy --only hosting --project manuel-portfolio-2026
+| Service | Domain | Platform |
+|---|---|---|
+| **Portfolio** | `delgadologic.tech` | Firebase Hosting |
+| **API** | `api.delgadologic.tech` | Cloud Functions v2 |
+| **Docs** | `docs.delgadologic.tech` | Firebase Hosting |
+| **Audit** | `audit.delgadologic.tech` | Firebase Hosting |
 
-# Deploy Cloud Functions
-firebase deploy --only functions --project manuel-portfolio-2026
-```
+**Payment:** PayPal REST API with webhook verification  
+**Secrets:** Google Secret Manager (`paypal-client-id`, `paypal-secret`)  
+**Billing Statement:** `DELGADOLOGI`
 
-## Security
+## 🛡️ Security
 
-- All product files stored in a **private Cloud Storage bucket** — no public access
-- PayPal credentials stored in **Google Secret Manager** — never hardcoded
-- Firestore rules enforce **deny-all** for client SDK — admin SDK bypasses via Cloud Functions
-- Hosting delivers **security headers** on all responses (DENY framing, nosniff, strict referrer)
-- Download URLs are **time-limited signed URLs** (24-hour expiry per transaction)
+- Product assets excluded from Git via `.gitignore`
+- Git history scrubbed with `--force` push to eliminate leaked assets
+- Paid downloads delivered via Firebase Storage Signed URLs (24-hour expiry)
+- `.bat` launchers include `Unblock-File` to remediate MotW blocks
+- Legal disclaimer with `YES` consent gate before any system modification
+
+## 👨‍💻 Author
+
+**Manuel Alejandro Delgado**  
+Lead Systems Engineer · Washington, D.C.  
+Delgado Creative Enterprises LLC
+
+- 🌐 [delgadologic.tech](https://delgadologic.tech)
+- 📧 [support@delgadologic.tech](mailto:support@delgadologic.tech)
+- 💻 [github.com/Chronolapse411](https://github.com/Chronolapse411)
 
 ---
 
-<div align="center">
+<p align="center">
+  <em>DISCLAIMER: This utility is for IT professionals and advanced users. DelgadoLogic is not responsible for data loss or hardware failure. Always back up your registry and data before making changes.</em>
+</p>
 
-**Built by Manuel Alejandro Delgado**
-Lead Systems Engineer · [DelgadoLogic.tech](https://delgadologic.tech)
-
-</div>
+<p align="center">© 2026 Delgado Creative Enterprises LLC · MIT License</p>

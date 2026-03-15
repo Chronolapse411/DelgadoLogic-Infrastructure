@@ -1,38 +1,70 @@
-# **Automated Fulfillment Email Template**
+# Automated Fulfillment Email Template
 
-**Sender:** support@delgadologic.tech
+**Version:** AR-Series Architect v5.5  
+**Business Identity:** DelgadoLogic  
+**Sender:** `support@delgadologic.tech`
 
-**Subject:** ⚡ Your Download: Windows 11 AudioRestore Pro Guide \[Order {{order\_id}}\]
+---
+
+**Subject:** `⚡ Your Download: DelgadoLogic AR-Series Architect v5.5 [Order {{order_id}}]`
+
+---
 
 Hello,
 
-Thank you for your purchase from DelgadoLogic. Your payment was successful, and your professional recovery assets are ready for download.
+Thank you for your purchase from **DelgadoLogic**. Your payment was successful, and your professional recovery assets are ready for download.
 
-### **📥 Your Secure Download**
+### 📥 Your Secure Download
 
-Click the link below to access your Pro Guide (PDF) and the Ultra v4.0 Diagnostic Script (.ps1).
+Click the link below to access the **AR-Series Enterprise Suite** — includes the Pro Manual, the 7-phase repair engine, and the one-click launcher.
 
-*Note: This link is unique to your transaction and will expire in 24 hours for security.*
+> *Note: This is a 24-Hour Secure Access Token. This link is unique to your transaction, cryptographically signed, and will expire in 24 hours for security. If the link expires, visit [delgadologic.tech](https://delgadologic.tech) and click "Generate Secure Download Link" on the success page.*
 
-**\[DOWNLOAD YOUR RECOVERY SUITE HERE\]**
+**[DOWNLOAD YOUR RECOVERY SUITE]**
 
-### **🛠️ Quick Start: Running the Ultra v4.0 Script**
+*Delivery Method:* Signed URL via Cloud Function (`getSecureDownload`)
 
-To ensure the hardware-level patches are applied correctly, please follow these "Lead Engineer" steps:
+---
 
-1. **Run as Administrator:** Click Start, type **PowerShell**, right-click it, and select **Run as Administrator**.  
-2. **Enable Execution:** Copy and paste this command into the window and hit Enter:  
-   Set-ExecutionPolicy RemoteSigned \-Scope CurrentUser  
-3. **Execute the Fix:** If your folder path has spaces, type & (ampersand \+ space), then right-click to paste the file path in quotes, and hit Enter.
+### 🛠️ Quick Start: Running the AR-Series v5.5 Suite
 
-### **📝 Transaction Details**
+The AR-Series v5.5 Edition includes a **GUI HUD Diagnostic Window** that provides real-time visual telemetry during the repair process. Follow these steps:
 
-* **Order ID:** {{order\_id}}  
-* **Diagnostic ID:** {{diag\_id}}  
-* **Support:** If the automated fix requires further adjustment for your specific hardware ID, please reply to this email.
+1. **Unzip** the downloaded archive to any folder on your desktop.
+
+2. **Read** the `0_START_HERE_ENTERPRISE.txt` file for orientation.
+
+3. **Double-click** `Launch_AR_Enterprise.bat` — the launcher will automatically:
+   - Request Administrator privileges (UAC prompt)
+   - Clear all "Mark of the Web" security blocks
+   - Launch the AR-Series Architect HUD
+
+4. **Accept the Disclaimer:** Type `YES` when prompted to proceed.
+
+5. **GUI HUD Phase:** The AR-Series v5.5 will automatically launch a **Kernel Integrity Scan HUD** — a real-time diagnostic window that visually enumerates `System32` components while DISM and SFC integrity repairs execute in the background. **Do not close this window.**
+
+6. **JSON Telemetry:** Upon completion, a diagnostic report is exported to your `%TEMP%` directory in JSON format for your records.
+
+---
+
+### 📝 Transaction Details
+
+| Field | Value |
+|---|---|
+| **Order ID** | `{{order_id}}` |
+| **Diagnostic ID** | `{{diag_id}}` (Format: `DL-ARCH-XXXXX`) |
+| **Product** | Manual_AR_v5.5.pdf |
+| **Script** | Core_AR_v5.5.ps1 (AR-Series Architect v5.5) |
+| **Launcher** | Launch_AR_Enterprise.bat (One-Click) |
+| **Support** | Reply to this email with your Diagnostic ID for hardware-specific adjustments |
+| **Billing Statement** | DELGADOLOGI |
+
+*\*Note: Charges will appear as 'DELGADOLOGI' on your credit card or bank statement.*
+
+---
 
 Best regards,
 
-**Manuel Alejandro Delgado**
-
-Lead Systems Engineer | [DelgadoLogic.tech](https://delgadologic.tech)
+**Manuel Alejandro Delgado**  
+Lead Systems Engineer · [DelgadoLogic.tech](https://delgadologic.tech)  
+Washington, D.C. · Delgado Creative Enterprises LLC

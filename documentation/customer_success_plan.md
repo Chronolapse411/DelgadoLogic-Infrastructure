@@ -1,75 +1,80 @@
-# **DelgadoLogic Automated Fulfillment Architecture**
+# DelgadoLogic Automated Fulfillment Architecture
 
-This plan transitions **DelgadoLogic** from a manual "Service Desk" model to a fully automated "Product-as-a-Service" (PaaS) engine. By integrating the PayPal REST API with Firebase Cloud Functions, we achieve 24/7 delivery with zero human intervention.
+**Version:** Architect v5.4 Edition  
+**Baseline:** 2026-03-15  
+**Business Identity:** DelgadoLogic (PayPal Business Profile Sync)
 
-## **1\. The "Zero-Latency" Customer Journey**
+---
 
-The goal is to ensure the customer never has to wait.
+This plan governs the fully automated "Product-as-a-Service" (PaaS) engine for **DelgadoLogic**. By integrating the PayPal REST API with Firebase Cloud Functions v2, we achieve 24/7 delivery with zero human intervention.
 
-1. **Purchase:** User clicks the $4.99 "Pro Guide" link on delgadologic.tech.  
-2. **Payment:** Transaction handled securely via PayPal. Your setup (Hosted ID: 9K83MQVDBSW5U) now supports PayPal, Venmo, Apple Pay, and Credit Cards.  
-3. **Redirection (The Handover):** PayPal's "Auto-Return" feature is confirmed and active. After payment, the user is redirected to https://delgadologic.tech?session=success.  
-4. **Verification:** The index.html logic detects the session=success parameter and triggers the "Success View" UI.  
-5. **Immediate Download:** The browser triggers the PDF download automatically from the success screen.  
-6. **Email Backup:** A Cloud Function detects the webhook from PayPal and sends a backup email to the user's inbox within seconds.
+## 1. The "Zero-Latency" Customer Journey
 
-## **2\. Technical Infrastructure (The "Automation Stack")**
+The goal is to ensure the customer never waits.
 
-### **A. The PayPal Webhook (The Trigger)**
+1. **Purchase:** User clicks the $4.99 "Pro Guide" link on [delgadologic.tech](https://delgadologic.tech).
+2. **Payment:** Transaction handled securely via PayPal. Current setup (Hosted ID: `9K83MQVDBSW5U`) supports PayPal, Venmo, Apple Pay, and Credit Cards.
+3. **Redirection (The Handover):** PayPal's "Auto-Return" redirects the user to `https://delgadologic.tech?session=success`.
+4. **Verification:** The `index.html` logic detects the `session=success` parameter and triggers the "Success View" UI.
+5. **Immediate Download:** The browser triggers the recovery suite download automatically from the success screen.
+6. **Email Backup:** `handlePayPalWebhook` (Cloud Function v2) detects the webhook from PayPal and sends a branded HTML delivery email within seconds.
 
-In your PayPal Developer Dashboard, set the Webhook URL to your Firebase Function endpoint.
+> **CX ALERT:** PayPal statement name is truncated to **'DELGADOLOGI'**. This is communicated in the fulfillment email to minimize billing disputes and chargebacks.
 
-* **Target URL:** https://api.delgadologic.tech/handlePayPalWebhook  
-* **Event Type:** CHECKOUT.ORDER.APPROVED  
-* **Logic:** This acts as a "push notification" that tells your server "The money is in the bank, send the file."
+## 2. Technical Infrastructure (The "Automation Stack")
 
-### **B. The Firebase Cloud Function (The Brain)**
+### A. The PayPal Webhook (The Trigger)
 
-Using your **API Key** (ASvzl8p...) and **Secret** (ENeefQ3...), the function performs these "Elite" level steps:
+In the PayPal Developer Dashboard, the Webhook URL is set to the branded API subdomain:
 
-1. **Identity Verification:** It calls back to PayPal to confirm the payment amount is exactly $4.99 and the status is "COMPLETED."  
-2. **Access Control:** It generates a **Signed URL** for the PDF. This link expires in 24 hours, preventing the file from being leaked on public forums.  
-3. **Audit Trail:** It logs the customer's email and Transaction ID into a Firestore collection named sales\_history.
+* **Target URL:** `https://api.delgadologic.tech/handlePayPalWebhook`
+* **Event Type:** `PAYMENT.CAPTURE.COMPLETED`
+* **Logic:** Server-side verification against the PayPal REST API confirms capture status and exact amount ($4.99).
 
-### **C. Firebase Storage (The Warehouse)**
+### B. The Firebase Cloud Function (The Brain)
 
-* **Path:** gs://manuel-portfolio-2026.appspot.com/products/Win11\_AudioRestore\_Pro\_Guide\_DelgadoLogic.pdf  
-* **Security:** Public access is **OFF**. Files are only retrieved via the Cloud Function to ensure only paid customers can access them.
+Using credentials stored in **Google Secret Manager** (`paypal-client-id` / `paypal-secret`), the function performs:
 
-## **3\. Post-Deployment Monitoring (Standard Operating Procedure)**
+1. **Identity Verification:** Calls back to PayPal to confirm payment amount is exactly $4.99 and status is `COMPLETED`.
+2. **Access Control:** Generates a **24-Hour Signed URL** for the product assets, preventing unauthorized redistribution.
+3. **Diagnostic ID:** Generates a deterministic `DL-ARCH-XXXXX` Diagnostic ID mapped to the PayPal capture.
+4. **Audit Trail:** Logs the customer's email, Transaction ID, and Diagnostic ID into Firestore (`artifacts/delgadologic/public/data/sales`).
 
-As a Systems Engineer, you should perform a "Daily Health Check":
+### C. Firebase Storage (The Warehouse)
 
-* **Sales Audit:** Check the sales\_history in Firestore to ensure every PayPal notification has a corresponding entry.  
-* **Log Review:** Check the Firebase Console logs for any "401 Unauthorized" errors, which would indicate a problem with your API Secret.  
-* **Email Deliverability:** Periodically test the process yourself (using a $0.01 test item) to ensure emails aren't landing in the Spam folder.
+* **Bucket:** `gs://manuel-portfolio-2026.appspot.com/products/`
+* **Product Assets:**
+  - `Win11_AudioRestore_Pro_Guide_DelgadoLogic.pdf`
+  - `fix_audio_moment5.ps1` (Architect v5.4 Edition)
+* **Local Path:** `product/AudioRestore_Architect/`
+* **Distribution:** `public/assets/downloads/AudioRestore_Architect_v5.4.zip`
+* **Security:** Public access is **OFF**. Files are only retrievable via Signed URLs generated by the Cloud Function to ensure only paid customers can access them.
 
-## **4\. Fulfillment Email Template (Automated)**
+## 3. Multi-Subdomain Architecture
 
-**Subject:** ⚡ Your Download: Windows 11 AudioRestore Pro Guide
+| Subdomain | Target | Purpose |
+|---|---|---|
+| `delgadologic.tech` | `portfolio` | Landing page + PayPal hosted button |
+| `api.delgadologic.tech` | `api-service` | PayPal webhook fulfillment engine |
+| `docs.delgadologic.tech` | `docs-service` | Technical documentation portal |
+| `audit.delgadologic.tech` | `audit-service` | Security auditor / staging |
 
-Hello,
+## 4. Post-Deployment Monitoring (Standard Operating Procedure)
 
-Your payment to DelgadoLogic was successful. You can download your professional recovery guide and script anytime using the secure link below:
+As a Systems Engineer, perform daily health checks:
 
-\[SECURE\_SIGNED\_DOWNLOAD\_LINK\]
+* **Sales Audit:** Check `sales` collection in Firestore to ensure every PayPal notification has a corresponding entry.
+* **Log Review:** Check Firebase Console logs for any `401 Unauthorized` errors indicating a Secret Manager or API credential issue.
+* **Health Function:** The `healthCheck` Cloud Function runs daily at 08:00 ET and pings the PayPal API to verify credentials.
+* **Email Deliverability:** Periodically test the process using a $0.01 test transaction to ensure emails land in the Inbox, not Spam.
 
-**Support Details:**
-
-* **Transaction ID:** {{paypal\_id}}  
-* **Lead Engineer:** Manuel Alejandro Delgado
-
-If the automated fix script requires further adjustment for your specific hardware ID, please reply to this email with your Diagnostic ID.
-
-— DelgadoLogic Engineering
-
-## **5\. Technical Reflection (For IT Support Portfolio)**
+## 5. Technical Reflection (For IT Support Portfolio)
 
 **Logic of the "Auto-Pilot" Rollout:**
 
-By choosing an API-driven architecture over manual fulfillment, I have demonstrated the ability to:
+By choosing an API-driven architecture over manual fulfillment, this project demonstrates the ability to:
 
-* **Integrate Third-Party Financial Gateways:** Successfully linked PayPal's NCP (No-Code Payment) system with a custom React/Firebase frontend.  
-* **Implement Serverless Logic:** Used Cloud Functions to minimize server costs while maximizing uptime.  
-* **Secure Digital Assets:** Applied "Signed URL" logic to protect intellectual property and revenue streams.  
-* **Enhance User Experience (UX):** Achieved a "one-click" workflow where the transition from payment to product is seamless.
+* **Integrate Third-Party Financial Gateways:** Successfully linked PayPal's REST API with a Firebase-powered frontend and branded API subdomain.
+* **Implement Serverless Logic:** Used Cloud Functions v2 (Node 20) to minimize server costs while maximizing uptime.
+* **Secure Digital Assets:** Applied "Signed URL" logic with 24-hour expiry to protect intellectual property and revenue streams.
+* **Enterprise-Grade Infrastructure:** Built a 4-subdomain Service-Oriented Architecture on Firebase Hosting with SEO-hardened security headers.
